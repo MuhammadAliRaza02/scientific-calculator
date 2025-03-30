@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background: #1e1e1e;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      max-width: 400px;
+    }
+
+    #display {
+      width: 95%;
+      height: 60px;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: right;
+      background: #000;
+      color: #0f0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #00bcd4;
+    }
+
+    .equal {
+      grid-column: span 2;
+      background: #0f0;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" placeholder="0" readonly>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendOperator('%')">%</button>
+      <button onclick="appendFunction('sqrt(')">√</button>
+      <button onclick="appendFunction('pow(')">xʸ</button>
+      <button onclick="appendFunction('e')">e</button>
+            
+      <button onclick="appendNumber('7')">7</button>
+      <button onclick="appendNumber('8')">8</button>
+      <button onclick="appendNumber('9')">9</button>
+      <button onclick="appendOperator('+')">+</button>
+      <button onclick="appendOperator('*')">*</button>
+            
+      <button onclick="appendNumber('4')">4</button>
+      <button onclick="appendNumber('5')">5</button>
+      <button onclick="appendNumber('6')">6</button>
+      <button onclick="appendOperator('-')">-</button>
+      <button onclick="appendOperator('/')">/</button>
+            
+      <button onclick="appendNumber('1')">1</button>
+      <button onclick="appendNumber('2')">2</button>
+      <button onclick="appendNumber('3')">3</button>
+      <button onclick="appendFunction('log(')">log</button>
+      <button onclick="appendFunction('ln(')">ln</button>
+      
+      <button onclick="appendNumber('0')">0</button>
+      <button onclick="appendFunction('cos(')">cos</button>
+      <button onclick="appendFunction('sin(')">sin</button>
+      <button onclick="appendFunction('tan(')">tan</button>
+      <button onclick="appendDot()">.</button>
+      
+      <button onclick="appendParenthesis('(')">(</button>
+      <button onclick="appendParenthesis(')')">)</button>
+      <button onclick="appendFunction('pi')">π</button>
+      <button onclick="deleteLast()">DEL</button>
+      <button  onclick="calculateResult()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function appendNumber(num) {
+      display.value += num;
+    }
+
+    function appendOperator(op) {
+      display.value += op;
+    }
+
+    function appendFunction(func) {
+      if (func === 'pi') display.value += Math.PI;
+      else if (func === 'e') display.value += Math.E;
+      else if (func === 'pow(') display.value += 'Math.pow('; // expects two arguments
+      else if (func === 'sqrt(') display.value += 'Math.sqrt('; 
+      else if (func === 'log(') display.value += 'Math.log10('; 
+      else if (func === 'ln(') display.value += 'Math.log('; 
+      else if (func === 'sin(') display.value += 'Math.sin('; 
+      else if (func === 'cos(') display.value += 'Math.cos('; 
+      else if (func === 'tan(') display.value += 'Math.tan('; 
+    }
+
+    function appendParenthesis(p) {
+      display.value += p;
+    }
+
+    function appendDot() {
+      display.value += '.';
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculateResult() {
+      try {
+        display.value = eval(display.value);
+      } catch (e) {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
